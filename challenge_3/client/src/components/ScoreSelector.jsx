@@ -58,12 +58,13 @@ class ScoreSelector extends React.Component {
   // }
 
   submitBowl() {
-    this.handleSpare();
+    // this.handleSpare();
     // this.handleStrike();
     if (this.state.bowls % 2 === 0 && parseInt(this.state.score) === 10) {
       this.setState({
         bowls: this.state.bowls + 2,
         score1: parseInt(this.state.score),
+        score2: 0,
         strike: true,
       })
     } else if (this.state.bowls % 2 === 0) {
@@ -82,13 +83,16 @@ class ScoreSelector extends React.Component {
 
   submitScore() {
     // this.handleStrike();
+    this.handleSpare();
     this.setState({
       prevScore: parseInt(this.state.score),
       totalScore: this.state.spare ? ((parseInt(this.state.score1) * 2) + parseInt(this.state.score2) + this.state.totalScore) :
       this.state.strike ? ((parseInt(this.state.score1) * 2) + (parseInt(this.state.score2 * 2)) + this.state.totalScore) :
       parseInt(this.state.score1) + parseInt(this.state.score2) + parseInt(this.state.totalScore),
       // bowls: this.state.strike ? this.state.bowls + 2 : this.state.bowls,
-      round: parseInt(this.state.round) + 1
+      round: parseInt(this.state.round) + 1,
+      score1: 0,
+      score2: 0,
     })
   }
 
