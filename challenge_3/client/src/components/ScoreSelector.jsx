@@ -6,6 +6,8 @@ class ScoreSelector extends React.Component {
     this.state = {
       score: 0,
       totalScore: 0,
+      bowls: 0,
+      round: 0,
     }
     this.submitScore = this.submitScore.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,6 +22,8 @@ class ScoreSelector extends React.Component {
   submitScore() {
     this.setState({
       totalScore: parseInt(this.state.score) + parseInt(this.state.totalScore),
+      bowls: parseInt(this.state.bowls) + 1,
+      round: this.state.bowls % 2 === 1 ? this.state.round + 1 : this.state.round,
     })
   }
 
@@ -42,7 +46,14 @@ class ScoreSelector extends React.Component {
         </select>
         <button onClick={this.submitScore}>SUBMIT SCORE</button>
         <div>
+          TOTAL SCORE:  
+          {'  '}
           {this.state.totalScore}
+        </div>
+        <div>
+          CURRENT ROUND:  
+          {'  '}
+          {this.state.round}
         </div>
       </div>
     )
