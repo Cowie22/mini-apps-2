@@ -1,0 +1,49 @@
+body {
+  background: black;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #FFD100;
+}
+
+form {
+  margin: 12% auto;
+  background-color: #2774AE;
+  border: 3px solid #2774AE;
+  color: #FFD100;
+  width: 380px;
+  height: 390px;
+}
+
+
+input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #2774AE;
+  box-sizing: border-box;
+  color: #FFD100;
+  font-size: 14px;
+  font-weight: 800;
+  background-color: #2774AE
+}
+
+button {
+  background-color: #FFD100;
+  color: #2774AE;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #2774AE;
+  color: #FFD100;
+}

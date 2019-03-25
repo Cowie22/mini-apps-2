@@ -1,4 +1,5 @@
 import React from 'react';
+import ScoreSelector from './ScoreSelector.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        Hello
+        <ScoreSelector />
       </div>
     )
   }
