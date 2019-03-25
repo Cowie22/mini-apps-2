@@ -16,6 +16,7 @@ class ScoreSelector extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSpare = this.handleSpare.bind(this);
     this.handleStrike = this.handleStrike.bind(this);
+    this.handleStrikeScore = this.handleStrikeScore.bind(this);
   }
 
   handleChange(event) {
@@ -34,6 +35,10 @@ class ScoreSelector extends React.Component {
     this.setState({
       strike: (this.state.bowls % 2 === 0) && (parseInt(this.state.score) === 10) ? true : false,
     })
+  }
+
+  handleStrikeScore() {
+    
   }
 
   submitScore() {
