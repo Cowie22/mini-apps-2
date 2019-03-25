@@ -17,10 +17,9 @@ class ScoreSelector extends React.Component {
     this.setState(newState);
   }
 
-  submitScore(event) {
-    console.log(event.target.value)
+  submitScore() {
     this.setState({
-      totalScore: this.state.score + this.state.totalScore,
+      totalScore: parseInt(this.state.score) + parseInt(this.state.totalScore),
     })
   }
 
