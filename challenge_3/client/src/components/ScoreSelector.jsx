@@ -5,12 +5,17 @@ class ScoreSelector extends React.Component {
     super(props);
     this.state = {
       score: 0,
+      prevScore: 0,
       totalScore: 0,
       bowls: 0,
       round: 0,
+      spare: false,
+      strike: false,
     }
     this.submitScore = this.submitScore.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSpare = this.handleSpare.bind(this);
+    this.handleStrike = this.handleStrike.bind(this);
   }
 
   handleChange(event) {
@@ -19,9 +24,26 @@ class ScoreSelector extends React.Component {
     this.setState(newState);
   }
 
-  submitScore() {
+  handleSpare() {
     this.setState({
-      totalScore: parseInt(this.state.score) + parseInt(this.state.totalScore),
+      spare: (this.state.bowls % 2 === 1) && (parseInt(this.state.score) + this.state.prevScore === 10) ? true : false,
+    })
+  }
+
+  handleStrike() {
+    this.setState({
+      strike: (this.state.bowls % 2 === 0) && (parseInt(this.state.score) === 10) ? true : false,
+    })
+  }
+
+  submitScore() {
+    this.handleSpare();
+    this.handleStrike();
+    this.setState({
+      prevScore: parseInt(this.state.score),
+      totalScore: this.state.spare ? (parseInt(this.state.score) * 2 + this.state.totalScore) :
+      this.state.strike ? (parseInt(this.state.score) * 2 + (this.state.prevScore * 2) + this.state.totalScore) :
+      parseInt(this.state.score) + parseInt(this.state.totalScore),
       bowls: parseInt(this.state.bowls) + 1,
       round: this.state.bowls % 2 === 1 ? this.state.round + 1 : this.state.round,
     })
@@ -54,6 +76,11 @@ class ScoreSelector extends React.Component {
           CURRENT ROUND:  
           {'  '}
           {this.state.round}
+        </div>
+        <div>
+          TOTAL BOWLS:  
+          {'  '}
+          {this.state.bowls}
         </div>
       </div>
     )
