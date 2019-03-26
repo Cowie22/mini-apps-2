@@ -27,12 +27,13 @@ class App extends React.Component {
   }
 
   render() {
+    const { date, price } = this.state;
     return (
       <div>
         <h1>Cryptocurrency-Charting-Tool</h1>
         <CryptoChart
-        date={this.state.date}
-        price={this.state.price}
+        date={date}
+        price={price}
         />
         <a href="https://www.coindesk.com/price/bitcoin">Powered by Coindesk</a>
       </div>
