@@ -20,9 +20,13 @@ class CryptoChart extends React.Component {
           {
             label: "Bitcoin Currency",
             data: nextProps.price,
+            pointHoverBackgroundColor: "#0ec91d",
             backgroundColor: [
               "#4286f4"
-            ]
+            ],
+            borderColor: [
+              "#ffffff"
+            ],
           }
         ],
       }
