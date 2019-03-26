@@ -84,7 +84,7 @@ class ScoreSelector extends React.Component {
   render() {
     const { totalScore, round, bowls, score1, score2 } = this.state;
     return (
-      bowls <= 22 ?
+      bowls <= 22 && parseInt(round) < 12 ?
       <div>
         <label>SELECT SCORE:</label>
         <select name="score" onChange={this.handleChange}>
