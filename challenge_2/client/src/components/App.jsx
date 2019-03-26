@@ -4,15 +4,23 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      date: [],
+      price: [],
     }
   }
-  
+
   componentDidMount() {
     axios.get('https://api.coindesk.com/v1/bpi/historical/close.json')
       .then((res) => {
+        let dateData = [];
+        let priceData = [];
+        for (let key in res.data.bpi) {
+          dateData.push(key);
+          priceData.push(res.data.bpi[key]);
+        }
         this.setState({
-          data: res.data.bpi
+          data: dateData,
+          price: priceData,
         })
       })
   }
