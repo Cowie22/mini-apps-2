@@ -17,9 +17,8 @@ class ScoreSelector extends React.Component {
     this.submitScore = this.submitScore.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSpare = this.handleSpare.bind(this);
-    // this.handleStrike = this.handleStrike.bind(this);
-    // this.handleStrikeScore = this.handleStrikeScore.bind(this);
     this.submitBowl = this.submitBowl.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   handleChange(event) {
@@ -28,77 +27,59 @@ class ScoreSelector extends React.Component {
     this.setState(newState);
   }
 
-  // handleSpare() {
-  //   this.setState({
-  //     spare: (this.state.bowls % 2 === 1) && (parseInt(this.state.score) + this.state.prevScore === 10) ? true : false,
-  //   })
-  // }
-
   handleSpare() {
+    const { score1, score2 } = this.state;
     this.setState({
-      spare: (parseInt(this.state.score1) + parseInt(this.state.score2)) === 10 && (parseInt(this.state.score2) !== 0) ? true : false,
+      spare: (parseInt(score1) + parseInt(score2)) === 10 && (parseInt(score2) !== 0) ? true : false,
     })
   }
 
-
-  // handleStrike() {
-  //   this.setState({
-  //     strike: (parseInt(this.state.score1) === 10) ? true : false,
-  //   })
-  // }
-
-  // handleStrikeScore() {
-  //   if (this.state.score === 10) {
-  //     this.setState({
-  //       bowls: parseInt(this.state.bowls) + 2,
-  //       round: parseInt(this.state.round) + 1,
-
-  //     })
-  //   }
-  // }
-
   submitBowl() {
-    // this.handleSpare();
-    // this.handleStrike();
-    if (this.state.bowls % 2 === 0 && parseInt(this.state.score) === 10) {
+    const { bowls, score, } = this.state;
+    if (bowls % 2 === 0 && parseInt(score) === 10) {
       this.setState({
-        bowls: this.state.bowls + 2,
-        score1: parseInt(this.state.score),
+        bowls: bowls + 2,
+        score1: parseInt(score),
         score2: 0,
-        // strike: true,
       })
-    } else if (this.state.bowls % 2 === 0) {
+    } else if (bowls % 2 === 0) {
       this.setState({
-        bowls: this.state.bowls + 1,
-        // round: this.state.round + 1,
-        score1: parseInt(this.state.score),
+        bowls: bowls + 1,
+        score1: parseInt(score),
       })
     } else {
       this.setState({
-        bowls: this.state.bowls + 1,
-        score2: parseInt(this.state.score),
+        bowls: bowls + 1,
+        score2: parseInt(score),
       })
     }
   }
 
   submitScore() {
-    // this.handleStrike();
+    const { score, score1, score2, totalScore, round, spare, strike } = this.state;
     this.handleSpare();
     this.setState({
-      prevScore: parseInt(this.state.score),
-      strike: this.state.score1 === 10 ? true : false,
-      totalScore: this.state.spare ? ((parseInt(this.state.score1) * 2) + parseInt(this.state.score2) + this.state.totalScore) :
-      this.state.strike ? ((parseInt(this.state.score1) * 2) + (parseInt(this.state.score2 * 2)) + this.state.totalScore) :
-      parseInt(this.state.score1) + parseInt(this.state.score2) + parseInt(this.state.totalScore),
-      // bowls: this.state.strike ? this.state.bowls + 2 : this.state.bowls,
-      round: parseInt(this.state.round) + 1,
+      prevScore: parseInt(score),
+      strike: score1 === 10 ? true : false,
+      totalScore: spare ? ((parseInt(score1) * 2) + parseInt(score2) + totalScore) :
+      strike ? ((parseInt(score1) * 2) + (parseInt(score2 * 2)) + totalScore) :
+      parseInt(score1) + parseInt(score2) + parseInt(totalScore),
+      round: parseInt(round) + 1,
       score1: 0,
       score2: 0,
     })
   }
 
+  handleReset() {
+    this.setState({
+      bowls: 0,
+    })
+  }
+
   render() {
+    const { totalScore, round, bowls, score1, score2 } = this.state;
     return (
+      bowls < 22 ?
       <div>
         <label>SELECT SCORE:</label>
         <select name="score" onChange={this.handleChange}>
@@ -119,28 +100,36 @@ class ScoreSelector extends React.Component {
         <div>
           TOTAL SCORE:  
           {'  '}
-          {this.state.totalScore}
+          {totalScore}
         </div>
         <div>
           CURRENT ROUND:  
           {'  '}
-          {this.state.round}
+          {round}
         </div>
         <div>
           TOTAL BOWLS:  
           {'  '}
-          {this.state.bowls}
+          {bowls}
         </div>
         <div>
           SCORE 1:  
           {'  '}
-          {this.state.score1}
+          {score1}
         </div>
         <div>
           SCORE 2:  
           {'  '}
-          {this.state.score2}
+          {score2}
         </div>
+      </div>
+      :
+      <div>
+        GAME COMPLETE!!
+        YOUR SCORE IS:
+        { ' ' }
+        {totalScore}
+        <button onClick={this.handleReset}>RESET GAME</button>
       </div>
     )
   }
