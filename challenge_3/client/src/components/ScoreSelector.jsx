@@ -36,7 +36,7 @@ class ScoreSelector extends React.Component {
 
   handleSpare() {
     this.setState({
-      spare: (parseInt(this.state.score1) + parseInt(this.state.score2)) === 10 ? true : false,
+      spare: (parseInt(this.state.score1) + parseInt(this.state.score2)) === 10 && (parseInt(this.state.score2) !== 0) ? true : false,
     })
   }
 
@@ -65,7 +65,7 @@ class ScoreSelector extends React.Component {
         bowls: this.state.bowls + 2,
         score1: parseInt(this.state.score),
         score2: 0,
-        strike: true,
+        // strike: true,
       })
     } else if (this.state.bowls % 2 === 0) {
       this.setState({
@@ -86,6 +86,7 @@ class ScoreSelector extends React.Component {
     this.handleSpare();
     this.setState({
       prevScore: parseInt(this.state.score),
+      strike: this.state.score1 === 10 ? true : false,
       totalScore: this.state.spare ? ((parseInt(this.state.score1) * 2) + parseInt(this.state.score2) + this.state.totalScore) :
       this.state.strike ? ((parseInt(this.state.score1) * 2) + (parseInt(this.state.score2 * 2)) + this.state.totalScore) :
       parseInt(this.state.score1) + parseInt(this.state.score2) + parseInt(this.state.totalScore),
