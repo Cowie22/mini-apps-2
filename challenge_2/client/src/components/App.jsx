@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import CryptoChart from './CryptoChart.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,17 +20,21 @@ class App extends React.Component {
           priceData.push(res.data.bpi[key]);
         }
         this.setState({
-          data: dateData,
+          date: dateData,
           price: priceData,
         })
       })
   }
 
   render() {
-    console.log(this.state.data)
+    console.log(this.state.date);
+    console.log(this.state.price);
     return (
       <div>
-        Hello
+        <CryptoChart
+        date={this.state.date}
+        price={this.state.price}
+        />
       </div>
     )
   }
