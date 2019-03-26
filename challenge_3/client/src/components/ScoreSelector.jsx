@@ -13,12 +13,14 @@ class ScoreSelector extends React.Component {
       strike: false,
       score1: 0,
       score2: 0,
+      strikeCount: 0,
     }
     this.submitScore = this.submitScore.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSpare = this.handleSpare.bind(this);
     this.submitBowl = this.submitBowl.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.baseState = this.state;
   }
 
   handleChange(event) {
@@ -35,33 +37,38 @@ class ScoreSelector extends React.Component {
   }
 
   submitBowl() {
-    const { bowls, score, } = this.state;
+    const { bowls, score, strikeCount } = this.state;
     if (bowls % 2 === 0 && parseInt(score) === 10) {
       this.setState({
         bowls: bowls + 2,
         score1: parseInt(score),
         score2: 0,
+        strikeCount: strikeCount + 1,
       })
     } else if (bowls % 2 === 0) {
       this.setState({
         bowls: bowls + 1,
         score1: parseInt(score),
+        strikeCount: 0,
       })
     } else {
       this.setState({
         bowls: bowls + 1,
         score2: parseInt(score),
+        strikeCount: 0,
       })
     }
   }
 
   submitScore() {
-    const { score, score1, score2, totalScore, round, spare, strike } = this.state;
+    const { score, score1, score2, totalScore, round, spare, strike, strikeCount, bowls } = this.state;
     this.handleSpare();
     this.setState({
       prevScore: parseInt(score),
       strike: score1 === 10 ? true : false,
       totalScore: spare ? ((parseInt(score1) * 2) + parseInt(score2) + totalScore) :
+      strike && strikeCount > 0 && parseInt(round) < 3 ? ((parseInt(score1) * 2) + totalScore) :
+      strike && strikeCount > 0 ? ((parseInt(score1) * 2) + 10 + totalScore) :
       strike ? ((parseInt(score1) * 2) + (parseInt(score2 * 2)) + totalScore) :
       parseInt(score1) + parseInt(score2) + parseInt(totalScore),
       round: parseInt(round) + 1,
@@ -71,15 +78,13 @@ class ScoreSelector extends React.Component {
   }
 
   handleReset() {
-    this.setState({
-      bowls: 0,
-    })
+    this.setState(this.baseState)
   }
 
   render() {
     const { totalScore, round, bowls, score1, score2 } = this.state;
     return (
-      bowls < 22 ?
+      bowls <= 22 ?
       <div>
         <label>SELECT SCORE:</label>
         <select name="score" onChange={this.handleChange}>
